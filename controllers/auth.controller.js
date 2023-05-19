@@ -8,7 +8,8 @@ exports.signup= async(req,res)=>{
         email:req.body.email,
         phone:req.body.phone,
         password:req.body.password,
-        location:req.body.location
+        country:req.body.country,
+        check:req.body.check
     }
     try{
         const user= await User.create(userObj)
@@ -18,7 +19,8 @@ exports.signup= async(req,res)=>{
             email:req.body.email,
             phone:req.body.phone,
             // password:bcrypt.hashSync(req.body.password,8),
-            location:req.body.location
+            country:req.body.country,
+            check:req.body.check
         }
         res.status(201).send({msg:"User create successfully",user})
     }

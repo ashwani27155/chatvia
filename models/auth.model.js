@@ -17,9 +17,13 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    location:{
+    country:{
         type:String,
         required:true
     },
+    check:{
+        type:String,
+        required:true
+    }
 },{ timestamps: true })
 module.exports=mongoose.model("user",userSchema)
