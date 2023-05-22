@@ -34,19 +34,17 @@ app.get("/login", function (req, res) {
 app.get('/',(req,res)=>{
     res.render('pages-register')
 })
-
+// app.get('/',(req,res)=>{
+//     res.render('chat')
+// })
 //showing recover password
-app.get('/forgetpassword',(req,res)=>{
-    res.render('pages-recoverpw')
-})
+
 
 //display error page
 app.get('/*',(req,res)=>{
     res.render('pages-404')
 })
-app.get('/dashboard',(req,res)=>{
-    res.render('calendar')
-})
+
 require('./routes/auth.routes')(app)
 
 app.listen(serverConfig.PORT,()=>{

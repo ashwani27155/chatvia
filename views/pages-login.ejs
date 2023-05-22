@@ -3,19 +3,19 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> Login | Qovex - Responsive Bootstrap 4 Admin Dashboard</title>
+    <title> Login | Chatvia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="/assets/images/favicon.ico">
 
     <!-- Bootstrap Css -->
-    <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
-    <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -32,19 +32,19 @@
                             <div class="bg-login-overlay"></div>
                             <div class="position-relative">
                                 <h5 class="text-white font-size-20">Welcome Back !</h5>
-                                <p class="text-white-50 mb-0">Sign in to continue to Qovex.</p>
+                                <p class="text-white-50 mb-0">Sign in to continue to Chatvia.</p>
                                 <a href="index.html" class="logo logo-admin mt-4">
-                                    <img src="assets/images/logo-sm-dark.png" alt="" height="30">
+                                    <img src="/assets/images/logo-sm-dark.png" alt="" height="30">
                                 </a>
                             </div>
                         </div>
                         <div class="card-body pt-5">
                             <div class="p-2">
-                                <form class="form-horizontal" action="/ejs/api/v1/auth/signin" method="post">
+                                <form class="form-horizontal" action="/api/v1/signin" method="post">
 
                                     <div class="form-group">
-                                        <label for="username">Username</label>
-                                        <input type="text" class="form-control" id="username" name="uname" placeholder="Enter username">
+                                        <label for="username">Email</label>
+                                        <input type="text" class="form-control" id="username" name="email" placeholder="Enter Email">
                                     </div>
 
                                     <div class="form-group">
@@ -52,26 +52,26 @@
                                         <input type="password" class="form-control" name="password" id="userpassword" placeholder="Enter password">
                                     </div>
 
-                                    <div class="custom-control custom-checkbox">
+                                    <!-- <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="customControlInline">
                                         <label class="custom-control-label" for="customControlInline">Remember me</label>
-                                    </div>
+                                    </div> -->
 
                                     <div class="mt-3">
                                         <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Log In</button>
                                     </div>
 
-                                    <div class="mt-4 text-center">
+                                    <!-- <div class="mt-4 text-center">
                                         <a href="pages-recoverpw.ejs" class="text-muted"><i class="mdi mdi-lock mr-1"></i> Forgot your password?</a>
-                                    </div>
+                                    </div> -->
                                 </form>
                             </div>
 
                         </div>
                     </div>
                     <div class="mt-5 text-center">
-                        <p>Don't have an account ? <a href="pages-register.ejs" class="font-weight-medium text-primary"> Signup now </a> </p>
-                        <p>© 2023 Qovex. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                        <p>Don't have an account ? <a href="/" class="font-weight-medium text-primary"> Signup now </a> </p>
+                        <p>© 2023 Chatvia. Crafted with <i class="mdi mdi-heart text-danger"></i> by Ashwani</p>
                     </div>
 
                 </div>
@@ -80,13 +80,13 @@
     </div>
 
     <!-- JAVASCRIPT -->
-    <script src="assets/libs/jquery/jquery.min.js"></script>
-    <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/libs/metismenu/metisMenu.min.js"></script>
-    <script src="assets/libs/simplebar/simplebar.min.js"></script>
-    <script src="assets/libs/node-waves/waves.min.js"></script>
+    <script src="/assets/libs/jquery/jquery.min.js"></script>
+    <script src="/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="/assets/libs/node-waves/waves.min.js"></script>
 
-    <script src="assets/js/app.js"></script>
+    <script src="/assets/js/app.js"></script>
 
 </body>
 

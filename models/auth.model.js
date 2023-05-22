@@ -21,9 +21,13 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    check:{
+    image:{
         type:String,
         required:true
+    },
+    isOnline:{
+        type:String,
+        default:"0"
     }
 },{ timestamps: true })
 module.exports=mongoose.model("user",userSchema)

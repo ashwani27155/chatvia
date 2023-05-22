@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Register | Chatvia - Responsive Bootstrap 4 Admin Dashboard</title>
+    <title>Register | Chatvia</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -41,10 +41,10 @@
                         <div class="card-body pt-5">
 
                             <div class="p-2">
-                                <form class="form-horizontal" action="/api/v1/auth/signup" method="post">
+                                <form class="form-horizontal" action="/api/v1/signup" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
-                                        <label for="useremail">Name</label>
-                                        <input type="text" class="form-control" name="name" id="useremail" placeholder="Enter email">
+                                        <label for="forName">Name</label>
+                                        <input type="text" class="form-control" name="name" id="username" placeholder="Enter email">
                                     </div>
                                     <div class="form-group">
                                         <label for="useremail">Email</label>
@@ -68,16 +68,16 @@
                                             <option value="Nepal">Nepal</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label for="checkbox">Click Me</label>
                                         <input type="checkbox" name="check" >
-                                    </div>
-                                    
-                                    
-                                    <!-- <div class="form-group">
-                                        <label for="username">Confirm Password</label>
-                                        <input type="text" class="form-control" name="password"  id="username" placeholder="Enter username">
                                     </div> -->
+                                    
+                                    
+                                    <div class="form-group">
+                                        <label for="username">Profile Image</label>
+                                        <input type="file" class="form-control" name="image"  id="username" placeholder="Enter username">
+                                    </div>
                                     <div class="mt-4">
                                         <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">Register</button>
                                     </div>

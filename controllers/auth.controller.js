@@ -3,26 +3,21 @@ const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
 const key=require('../config/secretkey.config')
 exports.signup= async(req,res)=>{
+    console.log("req body",req.body)
     const userObj={
         name:req.body.name,
         email:req.body.email,
         phone:req.body.phone,
-        password:req.body.password,
+        password:bcrypt.hashSync(req.body.password,8),
         country:req.body.country,
-        check:req.body.check
+        image:req.file.filename
     }
     try{
         const user= await User.create(userObj)
-        console.log("user created",user)
-        const userCreationResponse={
-            name:req.body.name,
-            email:req.body.email,
-            phone:req.body.phone,
-            // password:bcrypt.hashSync(req.body.password,8),
-            country:req.body.country,
-            check:req.body.check
-        }
-        res.status(201).send({msg:"User create successfully",user})
+        // console.log("user created",user)
+      
+        // res.status(201).send({msg:"User created successfully",user})
+        res.render('pages-login')
     }
     catch(error){
         console.log(error.message)
@@ -31,11 +26,12 @@ exports.signup= async(req,res)=>{
 }
 exports.signin=async(req,res)=>{
     try{
-        // console.log("req.body",req.body)
-        let user=await User.findOne({uname:req.body.email})
+        
+        let user=await User.findOne({email:req.body.email})
+        let otheruser=await User.find({email:{$nin:[user.email]}})
         if(!user){
             return res.status(201).send({
-                msg:"User id does not exist"
+                msg:"User does not exist"
             })
         }
         const isValidPassword=bcrypt.compareSync(req.body.password,user.password)
@@ -50,9 +46,7 @@ exports.signin=async(req,res)=>{
             location:req.body.location,
             token:token
         }
-        res.status(201).send(
-            res.redirect('/')
-        )
+        res.render('chat',{user:user,other:otheruser})
     }catch(error){
         console.log(error.message)
         res.status(404).send({
