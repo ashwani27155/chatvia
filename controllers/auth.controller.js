@@ -14,9 +14,6 @@ exports.signup= async(req,res)=>{
     }
     try{
         const user= await User.create(userObj)
-        // console.log("user created",user)
-      
-        // res.status(201).send({msg:"User created successfully",user})
         res.render('pages-login')
     }
     catch(error){
@@ -26,7 +23,6 @@ exports.signup= async(req,res)=>{
 }
 exports.signin=async(req,res)=>{
     try{
-        
         let user=await User.findOne({email:req.body.email})
         let otheruser=await User.find({email:{$nin:[user.email]}})
         if(!user){
