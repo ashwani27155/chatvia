@@ -26,8 +26,8 @@ const userSchema=new mongoose.Schema({
         required:true
     },
     isOnline:{
-        type:String,
-        default:"0"
+        type:Boolean,
+        default:false
     }
 },{ timestamps: true })
 module.exports=mongoose.model("user",userSchema)

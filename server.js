@@ -14,11 +14,21 @@ app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:true}))
 app.use(express.static(__dirname + '/public'));
 // var socketConfig=io.of('/user-namespace')
-io.on('connection',(socket)=>{
+io.on('connection',async (socket)=>{
     console.log("User Connected")
-    console.log(socket)
-    socket.on('disconnect',()=>{
+    const loginuserId=socket.handshake.auth.token
+    await User.findByIdAndUpdate({_id:loginuserId},{$set:{isOnline:true}})
+    // console.log(socket.handshake.auth.token)
+    // socket.on('login', function(data){
+    //     console.log('a user ' + data.userId + ' connected');
+    // });
+    socket.on('disconnect',async()=>{
         console.log("User disconnected")
+        await User.findByIdAndUpdate({_id:loginuserId},{$set:{isOnline:false}})
+    })
+    //chatting implementation
+    socket.on('newChat',function(data){
+        socket.broadcast.emit('loadnewchat',data)
     })
 })
 //database setup

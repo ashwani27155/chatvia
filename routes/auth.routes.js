@@ -14,4 +14,5 @@ const storage = multer.diskStorage({
 module.exports=(app)=>{
     app.post('/api/v1/signup',upload.single('image'),userController.signup)
     app.post('/api/v1/signin',userController.signin)
+    app.post('/api/v1/savechat',userController.savechat)
 }

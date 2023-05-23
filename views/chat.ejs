@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WhatsApp UI Clone</title>
+    <title>Chatvia Chat</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
@@ -19,6 +19,7 @@
                 </div>
                 <div class="listHead">
                     <h4><%=user.name%></h4>
+                    <!-- <%console.log(user._id)%> -->
                 </div>
                 <ul class="nav_icons">
                     <!-- <li><ion-icon name="scan-circle-outline"></ion-icon></li> -->
@@ -33,24 +34,29 @@
                     <ion-icon name="search-outline"></ion-icon> 
                 </div>                
             </div>
-            <!-- CHAT LIST -->
+            <!-- USER LIST -->
             <div class="chatlist">
-                <%other.forEach(data=>{%>
-                <div class="block active">
-                    <div class="imgBox">
-                        <img src="/user_img/<%=data.image%>"  class="cover" alt="">
-                    </div>
-                    <div class="details">
-                        <div class="listHead">
-                            <h4><%=data.name%></h4>
-                            <p class="time">10:56</p>
+                <%if(other.length>0){%>
+                    <%for(let data=0;data<other.length;data++){%>
+                        <div class="block active user-list" data-id="<%=other[data]['_id']%>">
+                            <div class="imgBox">
+                                <img src="/user_img/<%=other[data]['image']%>"  class="cover" alt="">
+                            </div>
+                            <div class="details">
+                                <div class="listHead">
+                                    <h4><%=other[data]["name"]%></h4>
+                                    <p class="time">10:56</p>
+                                </div>
+                                <div class="message_p">
+                                    <p>How are you doing?</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="message_p">
-                            <p>How are you doing?</p>
-                        </div>
-                    </div>
-                </div>
-                <%})%>
+                        <%}%>
+                    <%}else{%>
+                        <h2>There is no user to display</h2>
+                        <%}%>
+                
 
                 <div class="block unread">
                     <div class="imgBox">
@@ -69,13 +75,14 @@
                 </div>
             </div>
         </div>
-        <div class="rightSide">
+        <!-- Right side part -->
+        <div class="rightSide chat-section">
             <div class="header">
                 <div class="imgText">
                     <div class="userimg">
                         <img src="/user_img/<%=user.image%>"  alt="" class="cover">
                     </div>
-                    <h4><%=user.name%> <br><span>online</span></h4>
+                    <h4><%=user.name%> <br><span><%=user.isOnline%></span></h4>
                 </div>
                 <ul class="nav_icons">
                     <li><ion-icon name="search-outline"></ion-icon></li>
@@ -84,8 +91,8 @@
             </div>
 
             <!-- CHAT-BOX -->
-            <div class="chatbox">
-                <div class="message my_msg">
+            <div class="chatbox " id="chat-container">
+                <!-- <div class="message my_msg">
                     <p>Hi <br><span>12:18</span></p>
                 </div>
                 <div class="message friend_msg">
@@ -132,16 +139,19 @@
                 </div>
                 <div class="message friend_msg">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div>
+                </div> -->
             </div>
             
             <!-- CHAT INPUT -->
             <div class="chat_input">
-                <ion-icon name="happy-outline"></ion-icon>
-                <ion-icon name="cloud-upload-outline"></ion-icon>
+                <!-- <ion-icon name="happy-outline"></ion-icon>
+                <ion-icon name="cloud-upload-outline"></ion-icon> -->
                 <!-- <ion-icon name="happy-outline"></ion-icon> -->
-                <input type="text" placeholder="Type a message">
-                <ion-icon name="send-outline"></ion-icon>
+                <form action="", method="" id="chat-form" class="chat_input">
+                    <input type="text" id="message" name="message" placeholder="Type a message">
+                <!-- <ion-icon name="send-outline" type="submit" id="msg" value="submit"></ion-icon> -->
+                    <input type="submit" value="submit">
+            </form>
                 <!-- <ion-icon name="mic"></ion-icon> -->
             </div>
         </div>
@@ -149,16 +159,70 @@
 
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    var senderId="<%=user._id%>"
-    var socket = io(()=>{
+     var senderId="<%=user._id%>"
+     var receiverId
+    var socket = io({
         auth:{
             token:"<%=user._id%>"
         }
     });
+    
+// jQuery use 
+    $(document).ready(function(){
+        $('.user-list').click(function(){
+            // $('.chat-section').show()
+            var userId=$(this).attr('data-id')
+            receiverId=userId
+            console.log(receiverId)
+        })
+    })
+    $('#chat-form').submit(function(e){
+        e.preventDefault();
+        var message=$('#message').val()
+        $.ajax({
+            url:'/api/v1/savechat',
+            type:'post',
+            data:{senderId:senderId,recevierId:recevierId,message:message},
+            success:function(data){
+               if(data.success){
+                
+                $('#message').val('')
+                let chat=data.data.message
+                const currentDate = new Date();
+                const currentHour = currentDate.getHours();
+                const currentMinute = currentDate.getMinutes();
+                let html =`<div class="message my_msg">
+                    <p>${chat}<br><span>${currentHour}:${currentMinute}</span></p>
+                </div>`
+                $('#chat-container').append(html)
+                socket.emit('newChat',data.data)
+               }else{
+                alert(data.msg)
+               }
+            }
+        })
 
+    })
+    socket.on('loadnewchat',function(data){
+        // console.log("data item",data.senderId==data.receiverId)
+        if(data.senderId==data.receiverId && data.receiverId==data.senderId){
+
+            const currentDate = new Date();
+
+            const currentHour = currentDate.getHours();
+            const currentMinute = currentDate.getMinutes();
+
+            let html=` <div class="message friend_msg">
+                       <p>${data.message}<br><span>${currentHour}:${currentMinute}</span></p>
+                        </div> `
+            $('#chat-container').append(html)
+        }
+               
+    })
 </script>
 </body>
 </html>
