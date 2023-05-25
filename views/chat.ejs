@@ -164,6 +164,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
      var senderId="<%=user._id%>"
+     console.log("senderId==",senderId);
      var receiverId
     var socket = io({
         auth:{
@@ -172,21 +173,26 @@
     });
     
 // jQuery use 
-    $(document).ready(function(){
+    // $(document).ready(function(){
+        // var receiverId
         $('.user-list').click(function(){
             // $('.chat-section').show()
             var userId=$(this).attr('data-id')
             receiverId=userId
-            console.log(receiverId)
+            console.log("receiverId==",receiverId)
         })
-    })
+    // })
+    //chat api call
     $('#chat-form').submit(function(e){
         e.preventDefault();
+         console.log("rec------",receiverId);
         var message=$('#message').val()
         $.ajax({
             url:'/api/v1/savechat',
             type:'post',
-            data:{senderId:senderId,recevierId:recevierId,message:message},
+           
+            data:{senderId:senderId,receiverId:receiverId,message:message},
+            
             success:function(data){
                if(data.success){
                 
@@ -208,8 +214,9 @@
 
     })
     socket.on('loadnewchat',function(data){
-        // console.log("data item",data.senderId==data.receiverId)
-        if(data.senderId==data.receiverId && data.receiverId==data.senderId){
+        console.log("hdhdhhd==========",receiverId);
+        console.log("daldjf==",receiverId==data.senderId);
+        if(senderId==data.receiverId ){
 
             const currentDate = new Date();
 
