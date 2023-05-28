@@ -52,7 +52,17 @@ body {
   opacity: 0.06;
 }
 
-.header {
+.headerl {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  background: #ededed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+.headerr {
   position: relative;
   width: 100%;
   height: 60px;

@@ -13,14 +13,14 @@
         <div class="leftSide">
             <!-- Header -->
             
-            <div class="header">
+            <div class="headerl">
                 <div class="userimg">
                     <img src="/user_img/<%=user.image%>" alt="" class="cover">
                 </div>
-                <div class="listHead">
-                    <h4><%=user.name%></h4>
-                    <!-- <%console.log(user._id)%> -->
-                </div>
+                <h4><%=user.name%> <br><span>online</span></h4>
+                <!-- <div class="listHead">
+                  
+                </div> -->
                 <ul class="nav_icons">
                     <!-- <li><ion-icon name="scan-circle-outline"></ion-icon></li> -->
                     <li><ion-icon name="chatbox"></ion-icon></li>
@@ -77,8 +77,8 @@
         </div>
         <!-- Right side part -->
         <div class="rightSide chat-section">
-            <div class="header">
-                <div class="imgText">
+            <div class="headerr">
+                <!-- <div class="imgText">
                     <div class="userimg">
                         <img src="/user_img/<%=user.image%>"  alt="" class="cover">
                     </div>
@@ -87,59 +87,12 @@
                 <ul class="nav_icons">
                     <li><ion-icon name="search-outline"></ion-icon></li>
                     <li><ion-icon name="ellipsis-vertical"></ion-icon></li>
-                </ul>
+                </ul> -->
             </div>
 
             <!-- CHAT-BOX -->
             <div class="chatbox " id="chat-container">
-                <!-- <div class="message my_msg">
-                    <p>Hi <br><span>12:18</span></p>
-                </div>
-                <div class="message friend_msg">
-                    <p>Hey <br><span>12:18</span></p>
-                </div>
-                <div class="message my_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br><span>12:15</span></p>
-                </div>
-                <div class="message friend_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br><span>12:15</span></p>
-                </div>
-                <div class="message my_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque aliquid fugiat accusamus dolore qui vitae ratione optio sunt <br><span>12:15</span></p>
-                </div>
-                <div class="message friend_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. <br><span>12:15</span></p>
-                </div>
-                <div class="message my_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur <br><span>12:15</span></p>
-                </div>
-                <div class="message friend_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div>
-                <div class="message my_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div>
-                <div class="message friend_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div>
-                <div class="message my_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div>
-                <div class="message friend_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div>
-                <div class="message my_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div>
-                <div class="message friend_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div>
-                <div class="message my_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div>
-                <div class="message friend_msg">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.<br><span>12:15</span></p>
-                </div> -->
+                
             </div>
             
             <!-- CHAT INPUT -->
@@ -156,48 +109,60 @@
             </div>
         </div>
     </div>
-
-
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-<script src="/socket.io/socket.io.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 <script>
      var senderId="<%=user._id%>"
-     console.log("senderId==",senderId);
      var receiverId
-    var socket = io({
+     var socket = io({
         auth:{
             token:"<%=user._id%>"
         }
     });
-    
-// jQuery use 
-    // $(document).ready(function(){
-        // var receiverId
         $('.user-list').click(function(){
-            // $('.chat-section').show()
             var userId=$(this).attr('data-id')
             receiverId=userId
-            console.log("receiverId==",receiverId)
+            $.ajax({
+                url:`/api/v1/getUser/${receiverId}`,
+                type:'post',
+                data: { userId: receiverId },
+                success: function (response){
+                    receiverId=response.user._id
+                    var user = response.user;
+                    var receiverImage=user.image
+            
+         			var receiverName = user.name;
+                     let header=`
+                        <div class="imgText">
+                            <div class="userimg">
+                                <img src="/user_img/${receiverImage}"  alt="" class="cover">
+                            </div>
+                            <h4>${receiverName} <br><span>online</span></h4>
+                        </div>
+                        <ul class="nav_icons">
+                            <li><ion-icon name="search-outline"></ion-icon></li>
+                            <li><ion-icon name="ellipsis-vertical"></ion-icon></li>
+                        </ul>
+                        `
+                $('.headerr').html(header)
+                }
+               
+            })
         })
-    // })
-    //chat api call
     $('#chat-form').submit(function(e){
         e.preventDefault();
-         console.log("rec------",receiverId);
         var message=$('#message').val()
         $.ajax({
             url:'/api/v1/savechat',
             type:'post',
-           
             data:{senderId:senderId,receiverId:receiverId,message:message},
-            
             success:function(data){
                if(data.success){
-                
                 $('#message').val('')
-                let chat=data.data.message
+                let chat=data.chat.message
+                console.log(chat)
                 const currentDate = new Date();
                 const currentHour = currentDate.getHours();
                 const currentMinute = currentDate.getMinutes();
@@ -207,28 +172,26 @@
                 $('#chat-container').append(html)
                 socket.emit('newChat',data.data)
                }else{
+                console.log(error.message)
                 alert(data.msg)
                }
             }
         })
 
     })
+    
     socket.on('loadnewchat',function(data){
-        console.log("hdhdhhd==========",receiverId);
-        console.log("daldjf==",receiverId==data.senderId);
-        if(senderId==data.receiverId ){
+        // if(senderId==data.receiverId){
+            console.log("data",data);
 
             const currentDate = new Date();
-
             const currentHour = currentDate.getHours();
             const currentMinute = currentDate.getMinutes();
-
             let html=` <div class="message friend_msg">
                        <p>${data.message}<br><span>${currentHour}:${currentMinute}</span></p>
                         </div> `
             $('#chat-container').append(html)
-        }
-               
+        // }      
     })
 </script>
 </body>

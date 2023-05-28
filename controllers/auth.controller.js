@@ -67,15 +67,34 @@ exports.savechat = async (req, res) => {
 		message: req.body.message,
 	};
 	try {
+		// const exist = await Chat.findOne({
+		// 	member: { $all: [senderId, receiverId] },
+		// });
+		// if (exist) {
+		// 	res.status(200).send({ msg: "Conversation already exist" });
+		// } else {
 		const chat = await Chat.create(chatObj);
 		// console.log(chat)
 		res.status(201).send({
 			success: true,
 			msg: "Chat created successfully",
-			data: chat,
+			chat: chat,
 		});
+		// }
 	} catch (error) {
 		console.log(error.message);
 		res.status(400).send({ success: false, msg: error.message });
+	}
+};
+exports.getUserDetails = async (req, res) => {
+	try {
+		console.log(req.params.receiverId);
+		const user = await User.findOne({ _id: req.params.receiverId });
+		res.status(200).send({ msg: "User fetched successfully", user: user });
+	} catch (error) {
+		console.log(error.message);
+		res
+			.status(200)
+			.send({ msg: "Something went wrong while fetching new user" });
 	}
 };
