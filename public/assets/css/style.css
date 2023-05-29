@@ -364,3 +364,9 @@ body {
 /* .chat-section{
   display: none;
 } */
+.user-list {
+  display: none;
+}
+/* .chat_input{
+  display: none;
+} */

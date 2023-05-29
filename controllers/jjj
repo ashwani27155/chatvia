@@ -1,267 +1,332 @@
-// // // $(".user-list").click(function () {
-// // // 	var userId = $(this).attr("data-id");
-// // // 	receiverId = userId;
-// // // 	console.log("receiverId", receiverId);
-// // // 	console.log("senderId", senderId);
-// // // 	console.log("sender_image", senderId.image);
+// // // // // $(".user-list").click(function () {
+// // // // // 	var userId = $(this).attr("data-id");
+// // // // // 	receiverId = userId;
+// // // // // 	console.log("receiverId", receiverId);
+// // // // // 	console.log("senderId", senderId);
+// // // // // 	console.log("sender_image", senderId.image);
 
-// // // 	// Make an AJAX request to fetch user details based on the receiverId
-// // // 	$.ajax({
-// // // 		url: "/api/getUserDetails", // Replace with your API endpoint
-// // // 		method: "GET",
-// // // 		data: { userId: receiverId },
-// // // 		success: function (response) {
-// // // 			// Assuming the response is a JSON object containing the user details
-// // // 			var user = response.user;
-// // // 			var receiverImage = user.image;
-// // // 			var receiverName = user.name;
+// const { ajaxSetup } = require("jquery")
 
-// // // 			let header = `
-// // //                 <div class="imgText">
-// // //                     <div class="userimg">
-// // //                         <img src="/user_img/${receiverImage}" alt="" class="cover">
-// // //                     </div>
-// // //                     <h4>${receiverName}<br><span>${receiverId.isOnline}</span></h4>
-// // //                 </div>
-// // //                 <ul class="nav_icons">
-// // //                     <li><ion-icon name="search-outline"></ion-icon></li>
-// // //                     <li><ion-icon name="ellipsis-vertical"></ion-icon></li>
-// // //                 </ul>
-// // //             `;
+// // // // // 	// Make an AJAX request to fetch user details based on the receiverId
+// // // // // 	$.ajax({
+// // // // // 		url: "/api/getUserDetails", // Replace with your API endpoint
+// // // // // 		method: "GET",
+// // // // // 		data: { userId: receiverId },
+// // // // // 		success: function (response) {
+// // // // // 			// Assuming the response is a JSON object containing the user details
+// // // // // 			var user = response.user;
+// // // // // 			var receiverImage = user.image;
+// // // // // 			var receiverName = user.name;
 
-// // // 			$(".headerr").html(header); // Use .html() instead of .append() to replace the content
-// // // 		},
-// // // 		error: function (error) {
-// // // 			console.log("Error:", error);
-// // // 		},
-// // // 	});
+// // // // // 			let header = `
+// // // // //                 <div class="imgText">
+// // // // //                     <div class="userimg">
+// // // // //                         <img src="/user_img/${receiverImage}" alt="" class="cover">
+// // // // //                     </div>
+// // // // //                     <h4>${receiverName}<br><span>${receiverId.isOnline}</span></h4>
+// // // // //                 </div>
+// // // // //                 <ul class="nav_icons">
+// // // // //                     <li><ion-icon name="search-outline"></ion-icon></li>
+// // // // //                     <li><ion-icon name="ellipsis-vertical"></ion-icon></li>
+// // // // //                 </ul>
+// // // // //             `;
 
-// // // 	// Other code...
+// // // // // 			$(".headerr").html(header); // Use .html() instead of .append() to replace the content
+// // // // // 		},
+// // // // // 		error: function (error) {
+// // // // // 			console.log("Error:", error);
+// // // // // 		},
+// // // // // 	});
+
+// // // // // 	// Other code...
+// // // // // });
+// // // // // In this example, the AJAX request is made to the /api/getUserDetails endpoint (replace it with your actual endpoint URL) with the receiverId as a parameter. The server or API should handle this request and return the user details as a response. Once you receive the response, you can extract the required information (such as receiverImage and receiverName) and update the HTML accordingly.
+
+// // // // ///for searching
+
+// // // // To implement search functionality in your chat app, you'll need to make modifications to the existing code. Here's a general approach you can follow:
+
+// // // // Add a search bar in the HTML:
+
+// // // // Place an input field for the search query in your HTML code.
+// // // // Add a button or submit input to trigger the search functionality.
+// // // // Implement the search functionality in JavaScript:
+
+// // // // Attach an event listener to the search input field or the submit button.
+// // // // Capture the search query entered by the user.
+// // // // Send an AJAX request to the server, passing the search query as a parameter.
+// // // // Receive the search results from the server.
+// // // // Handle the search request on the server:
+
+// // // // Create a route on the server to handle the search request, e.g., '/api/v1/search'.
+// // // // Retrieve the search query from the request parameters or body.
+// // // // Perform the necessary search operation on your database (e.g., MongoDB) to find relevant chat messages or users.
+// // // // Return the search results as a response from the server.
+// // // // Update the chat interface with search results:
+
+// // // // Receive the search results in the AJAX success callback on the client-side.
+// // // // Parse the search results and update the chat interface dynamically.
+// // // // Replace or filter the existing chat list or messages with the search results.
+// // // // Note: The provided code is missing the server-side implementation, including the route for saving chats and the socket.io configuration. Make sure to handle these aspects as well.
+
+// // // // To implement the search functionality in your existing code, follow these steps:
+
+// // // // Add the search bar HTML code:
+
+// // // // Place the following code inside the <div class="search_chat"> element:
+// // // // html
+// // // // Copy code
+// // // // <div>
+// // // //     <input type="text" id="search-input" placeholder="Search or start new chat">
+// // // //     <ion-icon name="search-outline" id="search-icon"></ion-icon>
+// // // // </div>
+// // // // Update the JavaScript code to handle search functionality:
+
+// // // // Add the following code below your existing JavaScript code:
+// // // // javascript
+// // // // Copy code
+// // // // // Search functionality
+// // // // $('#search-icon').click(function() {
+// // // //     searchChat();
+// // // // });
+
+// // // // $('#search-input').keydown(function(event) {
+// // // //     if (event.which === 13) {
+// // // //         event.preventDefault();
+// // // //         searchChat();
+// // // //     }
+// // // // });
+
+// // // // function searchChat() {
+// // // //     var searchQuery = $('#search-input').val();
+// // // //     $.ajax({
+// // // //         url: '/api/v1/search',
+// // // //         type: 'POST',
+// // // //         data: { query: searchQuery },
+// // // //         success: function(response) {
+// // // //             // Handle the search results
+// // // //             console.log(response);
+// // // //             // Update the chat list or messages with the search results
+// // // //         },
+// // // //         error: function(error) {
+// // // //             console.error('Search request failed:', error);
+// // // //         }
+// // // //     });
+// // // // }
+// // // // Implement the server-side search functionality:
+
+// // // // Set up a route on the server to handle the search request, e.g., '/api/v1/search'.
+// // // // Retrieve the search query from the request parameters or body.
+// // // // Perform the necessary search operation in your database (e.g., MongoDB) to find relevant chat messages or users.
+// // // // Return the search results as a response.
+// // // // Add the following code in your server-side implementation:
+// // // // javascript
+// // // // Copy code
+// // // // app.post('/api/v1/search', (req, res) => {
+// // // //     const searchQuery = req.body.query; // Retrieve the search query from the request body
+
+// // // //     // Perform the search operation in your database (e.g., MongoDB)
+// // // //     // Retrieve relevant chat messages or users based on the search query
+// // // //     // Return the search results as a response
+// // // //     // Example response:
+// // // //     const searchResults = [
+// // // //         { id: 1, name: 'John', message: 'Hello there!' },
+// // // //         { id: 2, name: 'Jane', message: 'How are you?' },
+// // // //         // ... more search results
+// // // //     ];
+// // // //     res.json(searchResults);
+// // // // });
+// // // // Update the chat interface with search results:
+
+// // // // Inside the AJAX success callback in the client-side code, update the chat interface with the received search results.
+// // // // Modify the chat list or messages based on the search results.
+// // // // You can replace the existing chat list entirely or filter it based on the search query.
+// // // // Example code to update the chat interface:
+// // // // javascript
+// // // // Copy code
+// // // // success: function(response) {
+// // // //     // Handle the search results
+// // // //     console.log(response);
+// // // //     // Update the chat list or messages with the search results
+// // // //     var searchResults = response; // Assuming the server returns an array of search results
+// // // //     var chatList = $('.chatlist');
+// // // //     chatList.empty(); // Clear the existing chat list
+// // // //     if (searchResults.length > 0) {
+// // // //         // Iterate over the search results and add them to the chat list
+// // // //         for (var i = 0; i < searchResults.length; i++) {
+// // // //             var result = searchResults[i];
+// // // //             // Build the HTML for each search result item and append it to the chat list
+// // // //             var itemHtml = '<div class="block">...</div>'; // Replace with your HTML structure
+// // // //             chatList.append(itemHtml);
+// // // //         }
+// // // //     } else {
+// // // //         // Display a message indicating no search results found
+// // // //         chatList.append('<h2>No search results found</h2>');
+// // // //     }
+// // // // },
+// // // // Make sure to update the server-side code accordingly and handle the search operation in your database to retrieve the relevant chat messages or users based on the search query.
+
+// // // ///one to one chat
+
+// // // To implement one-to-one chat functionality in your chat app, you'll need to establish a socket connection between the sender and receiver and handle the chat messages between them. Here's an approach you can follow:
+
+// // // Set up the socket connection:
+
+// // // Include the Socket.IO library in your HTML file by adding the following script tag:
+// // // html
+// // // Copy code
+// // // <script src="/socket.io/socket.io.js"></script>
+// // // Initialize the socket connection on the client-side:
+// // // javascript
+// // // Copy code
+// // // var socket = io();
+// // // On the server-side, configure Socket.IO to handle the socket connection and authentication:
+// // // javascript
+// // // Copy code
+// // // const io = require('socket.io')(server);
+
+// // // io.use((socket, next) => {
+// // //     // Perform authentication using the provided token or other credentials
+// // //     // Access the senderId from the authentication process
+// // //     const senderId = socket.handshake.auth.token;
+// // //     // Store the senderId in the socket object for later use
+// // //     socket.senderId = senderId;
+// // //     next();
 // // // });
-// // // In this example, the AJAX request is made to the /api/getUserDetails endpoint (replace it with your actual endpoint URL) with the receiverId as a parameter. The server or API should handle this request and return the user details as a response. Once you receive the response, you can extract the required information (such as receiverImage and receiverName) and update the HTML accordingly.
 
-// // ///for searching
+// // // io.on('connection', (socket) => {
+// // //     // Handle the socket connection and chat events
+// // //     // ...
+// // // });
+// // // Sending chat messages:
 
-// // To implement search functionality in your chat app, you'll need to make modifications to the existing code. Here's a general approach you can follow:
+// // // Update your existing JavaScript code to send chat messages from the sender to the receiver:
+// // // javascript
+// // // Copy code
+// // // $('#chat-form').submit(function(e) {
+// // //     e.preventDefault();
+// // //     var message = $('#message').val();
+// // //     $.ajax({
+// // //         url: '/api/v1/savechat',
+// // //         type: 'post',
+// // //         data: { senderId: senderId, receiverId: receiverId, message: message },
+// // //         success: function(data) {
+// // //             if (data.success) {
+// // //                 $('#message').val('');
+// // //                 let chat = data.chat.message;
+// // //                 console.log(chat);
+// // //                 const currentDate = new Date();
+// // //                 const currentHour = currentDate.getHours();
+// // //                 const currentMinute = currentDate.getMinutes();
+// // //                 let html = `<div class="message my_msg">
+// // //                     <p>${chat}<br><span>${currentHour}:${currentMinute}</span></p>
+// // //                 </div>`;
+// // //                 $('#chat-container').append(html);
+// // //                 // Emit the chat message to the receiver through the socket
+// // //                 socket.emit('newChat', { receiverId: receiverId, message: chat });
+// // //             } else {
+// // //                 console.log(error.message);
+// // //                 alert(data.msg);
+// // //             }
+// // //         }
+// // //     });
+// // // });
+// // // Receiving chat messages:
 
-// // Add a search bar in the HTML:
+// // // Listen for chat messages on the receiver's side using the socket connection:
+// // // javascript
+// // // Copy code
+// // // socket.on('newChat', function(data) {
+// // //     // Check if the received chat message is meant for the receiver
+// // //     if (data.receiverId === senderId) {
+// // //         console.log('data', data);
+// // //         const currentDate = new Date();
+// // //         const currentHour = currentDate.getHours();
+// // //         const currentMinute = currentDate.getMinutes();
+// // //         let html = ` <div class="message friend_msg">
+// // //             <p>${data.message}<br><span>${currentHour}:${currentMinute}</span></p>
+// // //         </div>`;
+// // //         $('#chat-container').append(html);
+// // //     }
+// // // });
+// // // Handle the chat messages on the server-side:
 
-// // Place an input field for the search query in your HTML code.
-// // Add a button or submit input to trigger the search functionality.
-// // Implement the search functionality in JavaScript:
+// // // Inside the socket connection on the server-side, handle the 'newChat' event:
+// // // javascript
+// // // Copy code
+// // // io.on('connection', (socket) => {
+// // //     // Handle the socket connection and chat events
+// // //     socket.on('newChat', (data) => {
+// // //         // Broadcast the chat message to the receiver
+// // //         const receiverSocket = io.sockets.connected[data.receiverId];
+// // //         if (receiverSocket) {
+// // //             receiverSocket.emit('newChat', data);
+// // //         }
+// // //     });
+// // // });
+// // // Note: In the provided code, make sure you have the necessary server-side routes and logic to save and retrieve chat messages from your database (e.g., MongoDB) using the '/api/v1/savechat' endpoint.
 
-// // Attach an event listener to the search input field or the submit button.
-// // Capture the search query entered by the user.
-// // Send an AJAX request to the server, passing the search query as a parameter.
-// // Receive the search results from the server.
-// // Handle the search request on the server:
+// // // This implementation allows for one-to-one chat between the sender and receiver, where chat messages are sent via AJAX requests and delivered in real-time using Socket.IO.
 
-// // Create a route on the server to handle the search request, e.g., '/api/v1/search'.
-// // Retrieve the search query from the request parameters or body.
-// // Perform the necessary search operation on your database (e.g., MongoDB) to find relevant chat messages or users.
-// // Return the search results as a response from the server.
-// // Update the chat interface with search results:
 
-// // Receive the search results in the AJAX success callback on the client-side.
-// // Parse the search results and update the chat interface dynamically.
-// // Replace or filter the existing chat list or messages with the search results.
-// // Note: The provided code is missing the server-side implementation, including the route for saving chats and the socket.io configuration. Make sure to handle these aspects as well.
 
-// // To implement the search functionality in your existing code, follow these steps:
+// // working code of search functionality
+// // To implement search functionality in the provided code, you can follow these steps:
 
-// // Add the search bar HTML code:
-
-// // Place the following code inside the <div class="search_chat"> element:
+// // Add an ID to the search input element:
 // // html
 // // Copy code
-// // <div>
-// //     <input type="text" id="search-input" placeholder="Search or start new chat">
-// //     <ion-icon name="search-outline" id="search-icon"></ion-icon>
-// // </div>
-// // Update the JavaScript code to handle search functionality:
-
-// // Add the following code below your existing JavaScript code:
+// // <input type="text" id="search-input" placeholder="Search or start new chat">
+// // Add an event listener to the search input to detect changes and filter the user list:
 // // javascript
 // // Copy code
-// // // Search functionality
-// // $('#search-icon').click(function() {
-// //     searchChat();
-// // });
-
-// // $('#search-input').keydown(function(event) {
-// //     if (event.which === 13) {
-// //         event.preventDefault();
-// //         searchChat();
-// //     }
-// // });
-
-// // function searchChat() {
-// //     var searchQuery = $('#search-input').val();
-// //     $.ajax({
-// //         url: '/api/v1/search',
-// //         type: 'POST',
-// //         data: { query: searchQuery },
-// //         success: function(response) {
-// //             // Handle the search results
-// //             console.log(response);
-// //             // Update the chat list or messages with the search results
-// //         },
-// //         error: function(error) {
-// //             console.error('Search request failed:', error);
+// // $('#search-input').on('input', function() {
+// //     var searchText = $(this).val().toLowerCase();
+// //     $('.user-list').each(function() {
+// //         var userName = $(this).find('.details h4').text().toLowerCase();
+// //         if (userName.indexOf(searchText) !== -1) {
+// //             $(this).show();
+// //         } else {
+// //             $(this).hide();
 // //         }
 // //     });
-// // }
-// // Implement the server-side search functionality:
-
-// // Set up a route on the server to handle the search request, e.g., '/api/v1/search'.
-// // Retrieve the search query from the request parameters or body.
-// // Perform the necessary search operation in your database (e.g., MongoDB) to find relevant chat messages or users.
-// // Return the search results as a response.
-// // Add the following code in your server-side implementation:
-// // javascript
-// // Copy code
-// // app.post('/api/v1/search', (req, res) => {
-// //     const searchQuery = req.body.query; // Retrieve the search query from the request body
-
-// //     // Perform the search operation in your database (e.g., MongoDB)
-// //     // Retrieve relevant chat messages or users based on the search query
-// //     // Return the search results as a response
-// //     // Example response:
-// //     const searchResults = [
-// //         { id: 1, name: 'John', message: 'Hello there!' },
-// //         { id: 2, name: 'Jane', message: 'How are you?' },
-// //         // ... more search results
-// //     ];
-// //     res.json(searchResults);
 // // });
-// // Update the chat interface with search results:
-
-// // Inside the AJAX success callback in the client-side code, update the chat interface with the received search results.
-// // Modify the chat list or messages based on the search results.
-// // You can replace the existing chat list entirely or filter it based on the search query.
-// // Example code to update the chat interface:
-// // javascript
+// // Style the hidden user list items to be hidden initially:
+// // css
 // // Copy code
-// // success: function(response) {
-// //     // Handle the search results
-// //     console.log(response);
-// //     // Update the chat list or messages with the search results
-// //     var searchResults = response; // Assuming the server returns an array of search results
-// //     var chatList = $('.chatlist');
-// //     chatList.empty(); // Clear the existing chat list
-// //     if (searchResults.length > 0) {
-// //         // Iterate over the search results and add them to the chat list
-// //         for (var i = 0; i < searchResults.length; i++) {
-// //             var result = searchResults[i];
-// //             // Build the HTML for each search result item and append it to the chat list
-// //             var itemHtml = '<div class="block">...</div>'; // Replace with your HTML structure
-// //             chatList.append(itemHtml);
-// //         }
-// //     } else {
-// //         // Display a message indicating no search results found
-// //         chatList.append('<h2>No search results found</h2>');
-// //     }
-// // },
-// // Make sure to update the server-side code accordingly and handle the search operation in your database to retrieve the relevant chat messages or users based on the search query.
+// // .user-list {
+// //     display: none;
+// // }
+// // With these modifications, when a user types in the search input, the user list will be filtered based on the entered text, showing only the matching user items.
 
-// ///one to one chat
+// // Note: Make sure to include the necessary jQuery library in the HTML code for the above JavaScript to work properly.
 
-// To implement one-to-one chat functionality in your chat app, you'll need to establish a socket connection between the sender and receiver and handle the chat messages between them. Here's an approach you can follow:
 
-// Set up the socket connection:
 
-// Include the Socket.IO library in your HTML file by adding the following script tag:
-// html
-// Copy code
-// <script src="/socket.io/socket.io.js"></script>
-// Initialize the socket connection on the client-side:
-// javascript
-// Copy code
-// var socket = io();
-// On the server-side, configure Socket.IO to handle the socket connection and authentication:
-// javascript
-// Copy code
-// const io = require('socket.io')(server);
 
-// io.use((socket, next) => {
-//     // Perform authentication using the provided token or other credentials
-//     // Access the senderId from the authentication process
-//     const senderId = socket.handshake.auth.token;
-//     // Store the senderId in the socket object for later use
-//     socket.senderId = senderId;
-//     next();
+
+
+// socket setup
+// io.on("connection", async (socket) => {
+// 	console.log("User Connected");
+// 	const loginuserId = socket.handshake.auth.token;
+// 	await User.findByIdAndUpdate(
+// 		{ _id: loginuserId },
+// 		{ $set: { isOnline: true } }
+// 	);
+// 	// console.log(socket.handshake.auth.token)
+// 	// socket.on('login', function(data){
+// 	//     console.log('a user ' + data.userId + ' connected');
+// 	// });
+// 	socket.on("disconnect", async () => {
+// 		console.log("User disconnected");
+// 		await User.findByIdAndUpdate(
+// 			{ _id: loginuserId },
+// 			{ $set: { isOnline: false } }
+// 		);
+// 	});
+// 	//chatting implementation
+// 	socket.on("newChat", function (data) {
+// 		socket.broadcast.emit("loadnewchat", data);
+// 	});
 // });
-
-// io.on('connection', (socket) => {
-//     // Handle the socket connection and chat events
-//     // ...
-// });
-// Sending chat messages:
-
-// Update your existing JavaScript code to send chat messages from the sender to the receiver:
-// javascript
-// Copy code
-// $('#chat-form').submit(function(e) {
-//     e.preventDefault();
-//     var message = $('#message').val();
-//     $.ajax({
-//         url: '/api/v1/savechat',
-//         type: 'post',
-//         data: { senderId: senderId, receiverId: receiverId, message: message },
-//         success: function(data) {
-//             if (data.success) {
-//                 $('#message').val('');
-//                 let chat = data.chat.message;
-//                 console.log(chat);
-//                 const currentDate = new Date();
-//                 const currentHour = currentDate.getHours();
-//                 const currentMinute = currentDate.getMinutes();
-//                 let html = `<div class="message my_msg">
-//                     <p>${chat}<br><span>${currentHour}:${currentMinute}</span></p>
-//                 </div>`;
-//                 $('#chat-container').append(html);
-//                 // Emit the chat message to the receiver through the socket
-//                 socket.emit('newChat', { receiverId: receiverId, message: chat });
-//             } else {
-//                 console.log(error.message);
-//                 alert(data.msg);
-//             }
-//         }
-//     });
-// });
-// Receiving chat messages:
-
-// Listen for chat messages on the receiver's side using the socket connection:
-// javascript
-// Copy code
-// socket.on('newChat', function(data) {
-//     // Check if the received chat message is meant for the receiver
-//     if (data.receiverId === senderId) {
-//         console.log('data', data);
-//         const currentDate = new Date();
-//         const currentHour = currentDate.getHours();
-//         const currentMinute = currentDate.getMinutes();
-//         let html = ` <div class="message friend_msg">
-//             <p>${data.message}<br><span>${currentHour}:${currentMinute}</span></p>
-//         </div>`;
-//         $('#chat-container').append(html);
-//     }
-// });
-// Handle the chat messages on the server-side:
-
-// Inside the socket connection on the server-side, handle the 'newChat' event:
-// javascript
-// Copy code
-// io.on('connection', (socket) => {
-//     // Handle the socket connection and chat events
-//     socket.on('newChat', (data) => {
-//         // Broadcast the chat message to the receiver
-//         const receiverSocket = io.sockets.connected[data.receiverId];
-//         if (receiverSocket) {
-//             receiverSocket.emit('newChat', data);
-//         }
-//     });
-// });
-// Note: In the provided code, make sure you have the necessary server-side routes and logic to save and retrieve chat messages from your database (e.g., MongoDB) using the '/api/v1/savechat' endpoint.
-
-// This implementation allows for one-to-one chat between the sender and receiver, where chat messages are sent via AJAX requests and delivered in real-time using Socket.IO.

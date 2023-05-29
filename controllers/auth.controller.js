@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const key = require("../config/secretkey.config");
 const Chat = require("../models/chat.model");
+const mongoose = require('mongoose');
 exports.signup = async (req, res) => {
 	console.log("req body", req.body);
 	const userObj = {
@@ -90,7 +91,12 @@ exports.getUserDetails = async (req, res) => {
 	try {
 		console.log(req.params.receiverId);
 		const user = await User.findOne({ _id: req.params.receiverId });
-		res.status(200).send({ msg: "User fetched successfully", user: user });
+		const chat = await Chat.find({
+			$or: [
+			  { receiverId: user._id, senderId: new mongoose.Types.ObjectId(req.body.senderId) }
+			]
+		  });
+		res.status(200).send({ msg: "User fetched successfully", user: user, chat:chat });
 	} catch (error) {
 		console.log(error.message);
 		res
