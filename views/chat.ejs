@@ -58,34 +58,6 @@
         </div>
         <!-- Right side part -->
         <div class="rightSide chat-section">
-            <div class="headerr">
-                <!-- <div class="imgText">
-                    <div class="userimg">
-                        <img src="/user_img/<%=user.image%>"  alt="" class="cover">
-                    </div>
-                    <h4><%=user.name%> <br><span><%=user.isOnline%></span></h4>
-                </div>
-                <ul class="nav_icons">
-                    <li><ion-icon name="search-outline"></ion-icon></li>
-                    <li><ion-icon name="ellipsis-vertical"></ion-icon></li>
-                </ul> -->
-            </div>
-
-            <!-- CHAT-BOX -->
-            <div class="chatbox " id="chat-container">
-            </div>
-            <!-- CHAT INPUT -->
-            <div class="chat_input">
-                <!-- <ion-icon name="happy-outline"></ion-icon>
-                <ion-icon name="cloud-upload-outline"></ion-icon> -->
-                <!-- <ion-icon name="happy-outline"></ion-icon> -->
-                <form action="", method="" id="chat-form" class="chat_input">
-                    <input type="text" id="message" name="message" placeholder="Type a message">
-                <!-- <ion-icon name="send-outline" type="submit" id="msg" value="submit"></ion-icon> -->
-                    <input type="submit" value="submit">
-            </form>
-                <!-- <ion-icon name="mic"></ion-icon> -->
-            </div>
         </div>
     </div>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -93,6 +65,7 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="/socket.io/socket.io.js"></script>
 <script>
+    
     $(document).ready(()=>{
         var senderId="<%=user._id%>"
         var receiverId
@@ -101,6 +74,7 @@
             token:"<%=user._id%>"
         }
     });
+    
         $('.user-list').click(function(){
             var userId=$(this).attr('data-id')
             receiverId=userId
@@ -114,7 +88,8 @@
                     var receiverImage=user.image
          			var receiverName = user.name;
                      let header=`
-                        <div class="imgText">
+                     <div class="headerr">
+                <div class="imgText">
                             <div class="userimg">
                                 <img src="/user_img/${receiverImage}"  alt="" class="cover">
                             </div>
@@ -124,13 +99,30 @@
                             <li><ion-icon name="search-outline"></ion-icon></li>
                             <li><ion-icon name="ellipsis-vertical"></ion-icon></li>
                         </ul>
+            </div>
+
+            <!-- CHAT-BOX -->
+            <div class="chatbox " id="chat-container">
+            </div>
+            <!-- CHAT INPUT -->
+            <div class="chat_input">
+                <ion-icon name="happy-outline"></ion-icon>
+                <ion-icon name="cloud-upload-outline"></ion-icon>
+            
+        
+                    <input type="text" id="message" name="message" placeholder="Type a message">
+                <!-- <ion-icon name="send-outline" type="submit" id="msg" value="submit"></ion-icon> -->
+          
+                    <button id="chat-form"> submit</button>
+        
+                <!-- <ion-icon name="mic"></ion-icon> -->
+            </div>
+
                         `
-                $('.headerr').html(header)
-                }
-            })
-        })
-    $('#chat-form').submit(function(e){
-        e.preventDefault();
+                $('.rightSide').html(header)
+                $('.headerr').attr('id', receiverId);
+                $('#chat-form').click(function(e){
+      
         var message=$('#message').val()
         $.ajax({
             url:'/api/v1/savechat',
@@ -145,6 +137,7 @@
                 const currentHour = currentDate.getHours();
                 const currentMinute = currentDate.getMinutes();
                 let html =`<div class="message my_msg">
+                    <ion-icon name="trash-outline"></ion-icon>
                     <p>${chat}<br><span>${currentHour}:${currentMinute}</span></p>
                 </div>`
                 $('#chat-container').append(html)
@@ -156,6 +149,11 @@
             }
         })
     })
+               
+                }
+            })
+        })
+   
     // Searching functionality
     $('#search-input').on('input', function() {
     var searchText = $(this).val().toLowerCase();
@@ -178,13 +176,21 @@ socket.on('loadnewchat', function (data) {
  
     let html = `
       <div class="message friend_msg">
+        <ion-icon name="trash-outline"></ion-icon>
         <p>${data.message}<br><span>${currentHour}:${currentMinute}</span></p>
       </div>
     `;
+    var idValue = $('.headerr').attr('id');
+console.log(idValue);
+if(idValue == data.senderId){
     $('#chat-container').append(html);
+}else{
+    alert("wromng")
+}
   });
 
      })
+ 
 </script>
 </body>
 </html>
